@@ -21,7 +21,7 @@ Upcoming features:
 ## How to Run
 
 1. Clone the repository:
-   git clone https://github.com/<Jon504>/budget-breakdown-cli.git
+   git clone [https://github.com/<Jon504>/budget-breakdown-cli.git](https://github.com/Jon504/budget-breakdown-cli.git)
 
 2. Navigate into the project folder:
    cd budget-breakdown-cli
