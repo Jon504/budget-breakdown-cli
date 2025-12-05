@@ -36,7 +36,7 @@ public class Main {
                     scanner.nextLine();
 
                     System.out.print("Enter category: ");
-                    String category = scanner.nextLine();
+                    String category = scanner.nextLine().trim();
 
                     System.out.print("Enter date (YYYY-MM-DD): ");
                     String dateInput = scanner.nextLine();
@@ -62,7 +62,7 @@ public class Main {
                 //to view total spending by category
                 case 4:
                     System.out.print("enter a category: ");
-                    String categoryInput = scanner.nextLine();
+                    String categoryInput = scanner.nextLine().trim();
                     manager.showTotalByCategory(categoryInput);
                     break;
 
