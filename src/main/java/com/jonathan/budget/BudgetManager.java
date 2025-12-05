@@ -1,6 +1,7 @@
 package com.jonathan.budget;
 import com.jonathan.budget.Expense;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class BudgetManager {
@@ -24,10 +25,13 @@ public class BudgetManager {
         if (expenses.isEmpty()){
             System.out.println("no recorded expenses yet.");
         }
-        else for (int i = 0; i < expenses.size(); i++){
+        else{
+            expenses.sort(Comparator.comparing(Expense::getDate)); 
+            for (int i = 0; i < expenses.size(); i++){
             Expense e = expenses.get(i);
             System.out.println((i + 1) + ") " + e.toString());
         }
+    }
 
     }
 
@@ -44,7 +48,7 @@ public class BudgetManager {
     //view total spending 
     public void showTotalSpent() {
         double total = getTotalSpent();
-        System.out.println("Total spent: $"+ total);
+        System.out.println("Total spent: $"+ String.format("%.2f", total));
     }
 
     //to calculate total spending for each catagory
@@ -62,11 +66,15 @@ public class BudgetManager {
     //method to print the category's total.
     public void showTotalByCategory(String category) {
         double total = getTotalByCategory(category);
-        System.out.println("Total spent on " + category + ": $" + total);
+        System.out.println("Total spent on " + category + ": $" + String.format("%.2f", total));
     }
 
     //method to delete an expense
     public void deleteExpense(int index) {
+        if (expenses.isEmpty()){
+            System.out.println("No expenses to delete.");
+            return;
+        }
         if(index >= 0 && index < expenses.size()){
             expenses.remove(index);
             System.out.println("Expense deleted.");
