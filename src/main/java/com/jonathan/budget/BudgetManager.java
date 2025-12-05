@@ -24,10 +24,12 @@ public class BudgetManager {
         if (expenses.isEmpty()){
             System.out.println("no recorded expenses yet.");
         }
-        else for (int i = 0; i < expenses.size(); i++){
+        else{ 
+            for (int i = 0; i < expenses.size(); i++){
             Expense e = expenses.get(i);
             System.out.println((i + 1) + ") " + e.toString());
         }
+    }
 
     }
 
@@ -44,7 +46,7 @@ public class BudgetManager {
     //view total spending 
     public void showTotalSpent() {
         double total = getTotalSpent();
-        System.out.println("Total spent: $"+ total);
+        System.out.println("Total spent: $"+ String.format("%.2f", total));
     }
 
     //to calculate total spending for each catagory
