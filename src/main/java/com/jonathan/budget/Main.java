@@ -23,7 +23,8 @@ public class Main {
             System.out.println("5) Delete Expense");
             System.out.println("6) Save Expenses to CSV");
             System.out.println("7) Load Expenses from CSV");
-            System.out.println("8) Exit");
+            System.out.println("8) View Catagory Percentages");
+            System.out.println("9) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -97,9 +98,14 @@ public class Main {
                     System.out.println("Expenses loaded successfully!");
                     break;
 
+                //view catagory percentages
+                  case 8:
+                    manager.showCategoryPercentages();
+                    break;
+
                 
                 //exit the program
-                case 8:
+                case 9:
                     System.out.println("Exiting program...");
                     running = false;
                     break;

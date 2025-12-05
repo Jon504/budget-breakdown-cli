@@ -3,6 +3,9 @@ import com.jonathan.budget.Expense;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 public class BudgetManager {
@@ -92,6 +95,62 @@ public class BudgetManager {
     public void setExpenses(List<Expense> newExpenses) {
         this.expenses = new ArrayList<>(newExpenses);
     }
+
+    //Category percentage breakdown function
+    //get totals for all categories
+    public Map<String, Double> getCategoryTotals() {
+        Map<String, Double> totals = new HashMap<>();
+
+        for( Expense e: expenses){
+            String category = e.getCategory();
+
+            totals.put(category, totals.getOrDefault(category, 0.0) + e.getAmount());
+        }
+        return totals;
+    }
+
+    //logic to get percentages of all categories
+    public Map<String, Double> getCategoryPercentages() {
+        Map<String, Double> totals = getCategoryTotals();
+        Map<String, Double> percentages = new HashMap<>();
+    
+        double grandTotal = getTotalSpent();
+        if (grandTotal == 0) return percentages;
+    
+        for (Map.Entry<String, Double> entry : totals.entrySet()) {
+            double percent = (entry.getValue() / grandTotal) * 100;
+            percentages.put(entry.getKey(), percent);
+        }
+    
+        return percentages;
+    }
+
+    //display category percentages
+    public void showCategoryPercentages() {
+        Map<String, Double> totals = getCategoryTotals();
+        Map<String, Double> percentages = getCategoryPercentages();
+        double grandTotal = getTotalSpent();
+    
+        System.out.println("\n===== Category Breakdown =====");
+        
+        for (String category : totals.keySet()) {
+            double amount = totals.get(category);
+            double percent = percentages.get(category);
+    
+            String line = String.format("%-12s", category); // category padded left
+            line += " ................ "; // dot spacing
+            line += String.format("$%.2f (%.0f%%)", amount, percent);
+    
+            System.out.println(line);
+        }
+    
+        System.out.println("-------------------------------------");
+        System.out.printf("Total: $%.2f%n", grandTotal);
+    }
+    
+
+
+    
     
 
 
