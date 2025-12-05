@@ -1,6 +1,7 @@
 package com.jonathan.budget;
 import com.jonathan.budget.Expense;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class BudgetManager {
@@ -24,7 +25,8 @@ public class BudgetManager {
         if (expenses.isEmpty()){
             System.out.println("no recorded expenses yet.");
         }
-        else{ 
+        else{
+            expenses.sort(Comparator.comparing(Expense::getDate)); 
             for (int i = 0; i < expenses.size(); i++){
             Expense e = expenses.get(i);
             System.out.println((i + 1) + ") " + e.toString());
