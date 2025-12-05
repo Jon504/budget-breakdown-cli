@@ -37,6 +37,8 @@ public class Main {
 
                     System.out.print("Enter category: ");
                     String category = scanner.nextLine().trim();
+                    category = category.substring(0,1).toUpperCase() + category.substring(1).toLowerCase();
+
 
                     System.out.print("Enter date (YYYY-MM-DD): ");
                     String dateInput = scanner.nextLine();
@@ -63,6 +65,8 @@ public class Main {
                 case 4:
                     System.out.print("enter a category: ");
                     String categoryInput = scanner.nextLine().trim();
+                    category = categoryInput.substring(0,1).toUpperCase() + categoryInput.substring(1).toLowerCase();
+
                     manager.showTotalByCategory(categoryInput);
                     break;
 
