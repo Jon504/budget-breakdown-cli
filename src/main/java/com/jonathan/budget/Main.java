@@ -14,7 +14,7 @@ public class Main {
 
         while (running) {
 
-            System.out.println("\n----Budget Breakdown Menu----");
+            System.out.println("\n=====Budget Breakdown Menu=====");
             System.out.println("1) Add Expense");
             System.out.println("2) List Expenses");
             System.out.println("3) View Total Spending");
