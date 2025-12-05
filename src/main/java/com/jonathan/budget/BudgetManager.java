@@ -2,6 +2,7 @@ package com.jonathan.budget;
 import com.jonathan.budget.Expense;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class BudgetManager {
@@ -83,6 +84,16 @@ public class BudgetManager {
             System.out.println("Invalid expense number.");
         }
     }
+
+    public List<Expense> getExpenses() {
+    return expenses;
+    }
+
+    public void setExpenses(List<Expense> newExpenses) {
+        this.expenses = new ArrayList<>(newExpenses);
+    }
+    
+
 
     
 }

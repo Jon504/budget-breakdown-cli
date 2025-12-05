@@ -1,4 +1,5 @@
 package com.jonathan.budget;
+import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
 import com.jonathan.budget.BudgetManager;
@@ -21,7 +22,8 @@ public class Main {
             System.out.println("4) View Total by Category");
             System.out.println("5) Delete Expense");
             System.out.println("6) Save Expenses to CSV");
-            System.out.println("7) Exit");
+            System.out.println("7) Load Expenses from CSV");
+            System.out.println("8) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -85,9 +87,19 @@ public class Main {
                     fm.saveToCSV(manager.getExpenses(), "expenses.csv");
                     break;
 
+                case 7:
+                    FileManager fileManager = new FileManager();
+                    List<Expense> loaded = fileManager.loadFromCSV("expenses.csv");
+
+                    // Clear current expenses and replace with loaded ones
+                    manager.setExpenses(loaded);
+
+                    System.out.println("Expenses loaded successfully!");
+                    break;
+
                 
                 //exit the program
-                case 7:
+                case 8:
                     System.out.println("Exiting program...");
                     running = false;
                     break;
