@@ -67,7 +67,7 @@ public class Main {
                     String categoryInput = scanner.nextLine().trim();
                     category = categoryInput.substring(0,1).toUpperCase() + categoryInput.substring(1).toLowerCase();
 
-                    manager.showTotalByCategory(categoryInput);
+                    manager.showTotalByCategory(category);
                     break;
 
                 //to delete an expense using the user;s input

@@ -66,7 +66,7 @@ public class BudgetManager {
     //method to print the category's total.
     public void showTotalByCategory(String category) {
         double total = getTotalByCategory(category);
-        System.out.println("Total spent on " + category + ": $" + total);
+        System.out.println("Total spent on " + category + ": $" + String.format("%.2f", total));
     }
 
     //method to delete an expense
