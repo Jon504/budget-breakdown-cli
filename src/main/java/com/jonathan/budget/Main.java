@@ -20,7 +20,8 @@ public class Main {
             System.out.println("3) View Total Spending");
             System.out.println("4) View Total by Category");
             System.out.println("5) Delete Expense");
-            System.out.println("6) Exit");
+            System.out.println("6) Save Expenses to CSV");
+            System.out.println("7) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -78,9 +79,15 @@ public class Main {
 
                     manager.deleteExpense(deleteIndex - 1);
                     break;
+
+                case 6:
+                     FileManager fm = new FileManager();
+                    fm.saveToCSV(manager.getExpenses(), "expenses.csv");
+                    break;
+
                 
                 //exit the program
-                case 6:
+                case 7:
                     System.out.println("Exiting program...");
                     running = false;
                     break;
