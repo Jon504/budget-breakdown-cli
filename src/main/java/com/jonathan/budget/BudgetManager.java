@@ -69,6 +69,10 @@ public class BudgetManager {
 
     //method to delete an expense
     public void deleteExpense(int index) {
+        if (expenses.isEmpty()){
+            System.out.println("No expenses to delete.");
+            return;
+        }
         if(index >= 0 && index < expenses.size()){
             expenses.remove(index);
             System.out.println("Expense deleted.");
