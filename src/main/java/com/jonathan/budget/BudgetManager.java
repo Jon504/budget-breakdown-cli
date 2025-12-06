@@ -1,10 +1,14 @@
 package com.jonathan.budget;
 import com.jonathan.budget.Expense;
+
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 
@@ -147,6 +151,42 @@ public class BudgetManager {
         System.out.println("-------------------------------------");
         System.out.printf("Total: $%.2f%n", grandTotal);
     }
+
+    public void showMonthlySummary(int year, Month month) {
+        Map<String, Double> totals = new HashMap<>();
+        double grandTotal = 0.0;
+
+        for (Expense e : expenses) {
+            LocalDate date = e.getDate();
+
+            if (date.getYear() == year && date.getMonth() == month) {
+                String category = e.getCategory();
+                double amount = e.getAmount();
+
+                totals.put(category, totals.getOrDefault(category, 0.0) + amount);
+                grandTotal += amount;
+            }
+        }
+
+        System.out.println("\n===== " + month + " " + year + " Summary =====");
+
+        if (totals.isEmpty()) {
+            System.out.println("No expenses recorded in this month.");
+            return;
+        }
+
+        for (String category : totals.keySet().stream().sorted().collect(Collectors.toList())) {
+            double amount = totals.get(category);
+            String line = String.format("%-12s", category);
+            line += " ................ ";
+            line += String.format("$%.2f", amount);
+            System.out.println(line);
+        }
+
+        System.out.println("-------------------------------------");
+        System.out.printf("Total: $%.2f%n", grandTotal);
+}
+
     
 
 

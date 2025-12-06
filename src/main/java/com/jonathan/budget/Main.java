@@ -2,6 +2,8 @@ package com.jonathan.budget;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDate;
+import java.time.Month;
+
 import com.jonathan.budget.BudgetManager;
 import com.jonathan.budget.Expense;
 
@@ -104,9 +106,23 @@ public class Main {
                     manager.showCategoryPercentages();
                     break;
 
+                //view monthly summary
+                case 9:
+                    System.out.print("Enter year (e.g. 2025): ");
+                    int year = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Enter month (1-12): ");
+                    int monthNum = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Month month = Month.of(monthNum);
+                    manager.showMonthlySummary(year, month);
+                    break;
+
                 
                 //exit the program
-                case 9:
+                case 10:
                     System.out.println("Exiting program...");
                     running = false;
                     break;
