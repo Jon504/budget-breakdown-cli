@@ -40,7 +40,8 @@ public class Main {
             System.out.println("20) Generate Total Expense Report (.txt)");
             System.out.println("21) Generate Category Report (.txt)");
             System.out.println("22) Generate Monthly Report (.txt)");
-            System.out.println("23) Exit");
+            System.out.println("23) Generate Weekly Report (.txt)");
+            System.out.println("24) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -198,16 +199,19 @@ public class Main {
                     manager.showSortedResults(manager.sortByCategory());
                     break;
 
+                    //generate total report
                     case 20:
                     ReportGenerator rg = new ReportGenerator(manager);
                     rg.generateTotalReport();
                     break;
 
+                    //generate category report
                    case 21:
                     ReportGenerator rgCat = new ReportGenerator(manager);
                     rgCat.generateCategoryReport();
                     break;
 
+                    //generate monthly report
                     case 22:
                     System.out.print("Enter year (e.g., 2025): ");
                     int year1 = scanner.nextInt();
@@ -220,10 +224,17 @@ public class Main {
                     rgMonth.generateMonthlyReport(year1, m);
                     break;
 
+                   //generate weekly report
+                   case 23:
+                    System.out.print("Enter week start date (YYYY-MM-DD): ");
+                    LocalDate weekStart1 = LocalDate.parse(scanner.nextLine());
 
+                    ReportGenerator rgWeek = new ReportGenerator(manager);
+                    rgWeek.generateWeeklyReport(weekStart1);
+                    break;
 
                 //exit the program
-                case 23:
+                case 24:
                     System.out.println("Exiting program...");
                     running = false;
                     break;
