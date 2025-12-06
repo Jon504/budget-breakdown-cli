@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.Collections;
 
 
 
@@ -151,6 +152,7 @@ public class BudgetManager {
         System.out.println("-------------------------------------");
         System.out.printf("Total: $%.2f%n", grandTotal);
     }
+    
     //logic used to find and display user's monthly summary
     public void showMonthlySummary(int year, Month month) {
         Map<String, Double> totals = new HashMap<>();
@@ -222,7 +224,7 @@ public class BudgetManager {
     }
 
     //helper method to format search results.
-    public void showSwearchResults(List<Expense> results){
+    public void showSearchResults(List<Expense> results){
         if(results.isEmpty()){
             System.out.println("No matching expenses found.");
             return;
@@ -275,7 +277,7 @@ public class BudgetManager {
         //seacrch by dateRange function
         public List<Expense> searchByDateRange(LocalDate start, LocalDate end) {
             List<Expense> results = new ArrayList<>();
-            
+
             for (Expense e : expenses) {
                 LocalDate date = e.getDate();
         
@@ -287,6 +289,86 @@ public class BudgetManager {
             }
             return results;
         }
+
+        //sort date by newest
+        public List<Expense> sortByDateNewest() {
+            List<Expense> sorted = new ArrayList<>(expenses);
+            sorted.sort(Comparator.comparing(Expense::getDate).reversed());
+            return sorted;
+        }
+        
+
+        //sort date by oldest
+        public List<Expense> sortByDateOldest(){
+            List<Expense> sorted = new ArrayList<>(expenses);
+            sorted.sort(Comparator.comparing(Expense::getDate));
+            return sorted;
+        }
+
+        //sort ny amount high to low
+        public List<Expense> sortByAmountHigh() {
+            List<Expense> sorted = new ArrayList<>(expenses);
+            sorted.sort(Comparator.comparing(Expense::getAmount).reversed());
+            return sorted;
+        }
+
+        //sort ny amount low to high
+        public List<Expense> sortByAmountLow() {
+            List<Expense> sorted = new ArrayList<>(expenses);
+            sorted.sort(Comparator.comparing(Expense::getAmount));
+            return sorted;
+        }
+
+        //sort by name A to Z
+        public List<Expense> sortByName() {
+            List<Expense> sorted = new ArrayList<>(expenses);
+            sorted.sort(Comparator.comparing(Expense::getName, String.CASE_INSENSITIVE_ORDER));
+            return sorted;
+        }
+
+        //sort by category A to Z
+        public List<Expense> sortByCategory() {
+            List<Expense> sorted = new ArrayList<>(expenses);
+            sorted.sort(Comparator.comparing(Expense::getCategory, String.CASE_INSENSITIVE_ORDER));
+            return sorted;
+        }
+
+        //Method to print sorted lines
+        public void showSortedResults(List<Expense> results) {
+            if (results.isEmpty()) {
+                System.out.println("No expenses to display.");
+                return;
+            }
+        
+            System.out.println("\n===== Sorted Results =====");
+        
+            for (Expense e : results) {
+                String name = e.getName();
+                String category = e.getCategory();
+                double amount = e.getAmount();
+                LocalDate date = e.getDate();
+        
+                String line = String.format("%s  ", date);
+        
+                line += String.format("%-15s", name);
+                line += " ............... ";
+                line += String.format("%-12s", category);
+                line += " ............... ";
+                line += String.format("$%.2f", amount);
+        
+                System.out.println(line);
+            }
+        }
+        
+
+
+        
+
+
+
+
+
+
         
         
 

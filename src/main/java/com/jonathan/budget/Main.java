@@ -31,7 +31,14 @@ public class Main {
             System.out.println("11) Search by Name");
             System.out.println("12) Search by Category");
             System.out.println("13) Search by Date Range");
-            System.out.println("14) Exit");
+            System.out.println("14) Sort by Date (Newest -> Oldest");
+            System.out.println("15) Sort by Date (Oldest -> Newest)");
+            System.out.println("16) Sort by Amount (High -> Low)");
+            System.out.println("17) Sort by Amount (Low -> High)");
+            System.out.println("18) Sort by Name (A -> Z)");
+            System.out.println("19) Sort by Category (A -> Z)");
+            System.out.println("20) Exit");
+
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -159,15 +166,39 @@ public class Main {
                     manager.showSearchResults(dateResults);
                     break;
 
+                    //Sort by Date newset to oldest
+                    case 14:
+                    manager.showSortedResults(manager.sortByDateNewest());
+                    break;
+
+                    //sort by date oldest to newest
+                    case 15:
+                    manager.showSortedResults(manager.sortByDateOldest());
+                    break;
+
+                    //sort by amount high to low
+                   case 16:
+                    manager.showSortedResults(manager.sortByAmountHigh());
+                    break;
+
+                    //sort by amount low to high
+                  case 17:
+                    manager.showSortedResults(manager.sortByAmountLow());
+                    break;
+
+                    //sort by name
+                    case 18:
+                    manager.showSortedResults(manager.sortByName());
+                    break;
+
+                    //sort by category
+                  case 19:
+                    manager.showSortedResults(manager.sortByCategory());
+                    break;
 
 
-
-
-
-
-                
                 //exit the program
-                case 14:
+                case 20:
                     System.out.println("Exiting program...");
                     running = false;
                     break;
