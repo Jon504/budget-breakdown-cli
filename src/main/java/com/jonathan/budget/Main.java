@@ -27,7 +27,11 @@ public class Main {
             System.out.println("7) Load Expenses from CSV");
             System.out.println("8) View Catagory Percentages");
             System.out.println("9) View Monthly Summary");
-            System.out.println("10) Exit");
+            System.out.println("10) View Weekly Summary");
+            System.out.println("11) Search by Name");
+            System.out.println("12) Search by Category");
+            System.out.println("13) Search by Date Range");
+            System.out.println("14) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -120,9 +124,50 @@ public class Main {
                     manager.showMonthlySummary(year, month);
                     break;
 
+                   case 10:
+                    System.out.print("Enter week start date (YYYY-MM-DD): ");
+                    String weekStr = scanner.nextLine();
+                    LocalDate weekStart = LocalDate.parse(weekStr);
+                    manager.showWeeklySummary(weekStart);
+                    break;
+
+                   //search by name
+                   case 11:
+                    System.out.print("Enter keyword to search by name: ");
+                    String keyword = scanner.nextLine();
+                    List<Expense> nameResults = manager.searchByName(keyword);
+                    manager.showSearchResults(nameResults);
+                    break;
+
+                    //seach by category
+                    case 12:
+                    System.out.print("Enter category: ");
+                    String cat = scanner.nextLine().trim();
+                    List<Expense> catResults = manager.searchByCategory(cat);
+                    manager.showSearchResults(catResults);
+                    break;
+
+                    //seach by date range
+                    case 13:
+                    System.out.print("Enter start date (YYYY-MM-DD): ");
+                    LocalDate startDate = LocalDate.parse(scanner.nextLine());
+
+                    System.out.print("Enter end date (YYYY-MM-DD): ");
+                    LocalDate endDate = LocalDate.parse(scanner.nextLine());
+
+                    List<Expense> dateResults = manager.searchByDateRange(startDate, endDate);
+                    manager.showSearchResults(dateResults);
+                    break;
+
+
+
+
+
+
+
                 
                 //exit the program
-                case 10:
+                case 14:
                     System.out.println("Exiting program...");
                     running = false;
                     break;

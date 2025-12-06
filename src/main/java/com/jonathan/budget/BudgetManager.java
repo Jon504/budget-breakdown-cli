@@ -151,18 +151,16 @@ public class BudgetManager {
         System.out.println("-------------------------------------");
         System.out.printf("Total: $%.2f%n", grandTotal);
     }
-
+    //logic used to find and display user's monthly summary
     public void showMonthlySummary(int year, Month month) {
         Map<String, Double> totals = new HashMap<>();
         double grandTotal = 0.0;
 
         for (Expense e : expenses) {
             LocalDate date = e.getDate();
-
             if (date.getYear() == year && date.getMonth() == month) {
                 String category = e.getCategory();
                 double amount = e.getAmount();
-
                 totals.put(category, totals.getOrDefault(category, 0.0) + amount);
                 grandTotal += amount;
             }
@@ -185,7 +183,120 @@ public class BudgetManager {
 
         System.out.println("-------------------------------------");
         System.out.printf("Total: $%.2f%n", grandTotal);
-}
+    }
+
+    //logic used to find and display an weekly summary from an given input
+    public void showWeeklySummary(LocalDate weekStart) {
+        LocalDate weekEnd = weekStart.plusDays(6);
+        Map<String, Double> totals = new HashMap<>();
+        double grandTotal = 0.0;
+
+        for (Expense e : expenses) {
+            LocalDate date = e.getDate();
+            boolean inRange = (date.isAfter(weekStart.minusDays(1)) && date.isBefore(weekEnd.plusDays(1)));
+
+            if (inRange) {
+                String category = e.getCategory();
+                double amount = e.getAmount();
+                totals.put(category, totals.getOrDefault(category, 0.0) + amount);
+                grandTotal += amount;
+            }
+        }
+
+        System.out.println("\n===== Week of " + weekStart + " =====");
+        if (totals.isEmpty()) {
+            System.out.println("No expenses recorded in this week.");
+            return;
+        }
+
+        for (String category : totals.keySet().stream().sorted().collect(Collectors.toList())) {
+            double amount = totals.get(category);
+            String line = String.format("%-12s", category);
+            line += " ................ ";
+            line += String.format("$%.2f", amount);
+            System.out.println(line);
+        }
+
+        System.out.println("-------------------------------------");
+        System.out.printf("Total: $%.2f%n", grandTotal);
+    }
+
+    //helper method to format search results.
+    public void showSwearchResults(List<Expense> results){
+        if(results.isEmpty()){
+            System.out.println("No matching expenses found.");
+            return;
+        }
+
+        System.out.println("\n===== Search Results =====");
+
+        for (Expense e: results) {
+            String name = e.getName();
+            String category = e.getCategory();
+            double amount = e.getAmount();
+            LocalDate date = e.getDate();
+
+            String line = String.format("%s  ",date);
+
+            line += String.format("%-15s", name);
+            line += " ............... ";
+            line += String.format("%-12s", category);
+            line += " ............... ";
+            line += String.format("$%.2f", amount);
+
+            System.out.println(line);
+
+        }
+    }
+        //search by name function
+        public List<Expense> searchByName(String keyword){
+            List<Expense> results = new ArrayList<>();
+
+            for (Expense e : expenses){
+                if (e.getName().toLowerCase().contains(keyword.toLowerCase())){
+                    results.add(e);
+                }
+            }
+            return results;
+        }
+
+        //search by category function
+        public List<Expense> searchByCategory(String category) {
+            List<Expense> results = new ArrayList<>();
+        
+            for (Expense e : expenses) {
+                if (e.getCategory().equalsIgnoreCase(category)) {
+                    results.add(e);
+                }
+            }
+            return results;
+        }
+
+        //seacrch by dateRange function
+        public List<Expense> searchByDateRange(LocalDate start, LocalDate end) {
+            List<Expense> results = new ArrayList<>();
+            
+            for (Expense e : expenses) {
+                LocalDate date = e.getDate();
+        
+                boolean inRange =
+                    (date.isAfter(start.minusDays(1)) && date.isBefore(end.plusDays(1)));
+                if (inRange) {
+                    results.add(e);
+                }
+            }
+            return results;
+        }
+        
+        
+
+
+
+
+
+
+
+    }
 
     
 
@@ -195,4 +306,4 @@ public class BudgetManager {
 
 
     
-}
+
