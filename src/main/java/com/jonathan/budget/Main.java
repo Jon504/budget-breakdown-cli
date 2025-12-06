@@ -38,8 +38,8 @@ public class Main {
             System.out.println("18) Sort by Name (A -> Z)");
             System.out.println("19) Sort by Category (A -> Z)");
             System.out.println("20) Generate Total Expense Report (.txt)");
-            System.out.println("21) Exit");
-
+            System.out.println("21) Generate Category Report (.txt)");
+            System.out.println("22) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -202,8 +202,14 @@ public class Main {
                     rg.generateTotalReport();
                     break;
 
+                   case 21:
+                    ReportGenerator rgCat = new ReportGenerator(manager);
+                    rgCat.generateCategoryReport();
+                    break;
+
+
                 //exit the program
-                case 21:
+                case 22:
                     System.out.println("Exiting program...");
                     running = false;
                     break;
