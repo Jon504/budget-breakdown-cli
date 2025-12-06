@@ -37,7 +37,8 @@ public class Main {
             System.out.println("17) Sort by Amount (Low -> High)");
             System.out.println("18) Sort by Name (A -> Z)");
             System.out.println("19) Sort by Category (A -> Z)");
-            System.out.println("20) Exit");
+            System.out.println("20) Generate Total Expense Report (.txt)");
+            System.out.println("21) Exit");
 
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
@@ -196,9 +197,13 @@ public class Main {
                     manager.showSortedResults(manager.sortByCategory());
                     break;
 
+                    case 20:
+                    ReportGenerator rg = new ReportGenerator(manager);
+                    rg.generateTotalReport();
+                    break;
 
                 //exit the program
-                case 20:
+                case 21:
                     System.out.println("Exiting program...");
                     running = false;
                     break;
