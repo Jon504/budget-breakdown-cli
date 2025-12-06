@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.Month;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.io.File;
 
@@ -17,7 +18,7 @@ public class ReportGenerator {
         this.manager = manager;
     }
 
-    // total report
+    // to generate total report
         public void generateTotalReport() {
             List<Expense> expenses = manager.getExpenses();
             if (expenses.isEmpty()) {
@@ -83,23 +84,142 @@ public class ReportGenerator {
         
             writeToFile("reports/total_report.txt", report.toString());
         }
+
+        //To generate category reports
+        public void generateCategoryReport() {
+            Map<String, Double> totals = manager.getCategoryTotals();
+            Map<String, Double> percents = manager.getCategoryPercentages();
+            double grandTotal = manager.getTotalSpent();
+        
+            if (totals.isEmpty()) {
+                System.out.println("No expenses to generate report.");
+                return;
+            }
+        
+            StringBuilder report = new StringBuilder();
+            report.append("========== CATEGORY REPORT ==========\n\n");
+        
+            for (String category : totals.keySet()) {
+                double amount = totals.get(category);
+                double percent = percents.get(category);
+        
+                String line = String.format("%-12s", category);
+                line += " ................ ";
+                line += String.format("$%.2f (%.0f%%)", amount, percent);
+        
+                report.append(line).append("\n");
+            }
+        
+            report.append("------------------------------------------\n");
+            report.append(String.format("Total: $%.2f\n", grandTotal));
+        
+            java.io.File folder = new java.io.File("reports");
+            if (!folder.exists()) folder.mkdir();
+        
+            writeToFile("reports/category_report.txt", report.toString());
+        }
+
+        //to generate monthly report
+        public void generateMonthlyReport(int year, Month month) {
+            // Build a map of totals for the given month
+            Map<String, Double> totals = new HashMap<>();
+            double grandTotal = 0.0;
+
+            for (Expense e : manager.getExpenses()) {
+                LocalDate date = e.getDate();
+                if (date.getYear() == year && date.getMonth() == month) {
+                    String category = e.getCategory();
+                    double amount = e.getAmount();
+                    totals.put(category, totals.getOrDefault(category, 0.0) + amount);
+                    grandTotal += amount;
+                }
+            }
+
+            StringBuilder report = new StringBuilder();
+            report.append("========== ").append(month).append(" ").append(year).append(" SUMMARY ==========\n");
+
+            if (totals.isEmpty()) {
+                report.append("No expenses recorded in this month.\n");
+            } else {
+                for (String category : totals.keySet().stream().sorted().toList()) {
+                    double amount = totals.get(category);
+
+                    String line = String.format("%-12s", category);
+                    line += " ................ ";
+                    line += String.format("$%.2f", amount);
+
+                    report.append(line).append("\n");
+                }
+
+                report.append("------------------------------------------\n");
+                report.append(String.format("Total: $%.2f\n", grandTotal));
+            }
+
+            // ensure reports folder exists
+            java.io.File folder = new java.io.File("reports");
+            if (!folder.exists())
+                folder.mkdir();
+
+            String filename = "reports/monthly_" + year + "_" + month.getValue() + ".txt";
+            writeToFile(filename, report.toString());
+        }
+
+        public void generateWeeklyReport(LocalDate weekStart) {
+            LocalDate weekEnd = weekStart.plusDays(6);
+        
+            Map<String, Double> totals = new HashMap<>();
+            double grandTotal = 0.0;
+        
+            for (Expense e : manager.getExpenses()) {
+                LocalDate date = e.getDate();
+        
+                boolean inRange = 
+                    (date.isAfter(weekStart.minusDays(1)) && date.isBefore(weekEnd.plusDays(1)));
+        
+                if (inRange) {
+                    String category = e.getCategory();
+                    double amount = e.getAmount();
+        
+                    totals.put(category, totals.getOrDefault(category, 0.0) + amount);
+                    grandTotal += amount;
+                }
+            }
+        
+            StringBuilder report = new StringBuilder();
+            report.append("========== WEEK OF ").append(weekStart).append(" ==========\n");
+        
+            if (totals.isEmpty()) {
+                report.append("No expenses recorded this week.\n");
+            } else {
+                for (String category : totals.keySet().stream().sorted().toList()) {
+                    double amount = totals.get(category);
+        
+                    String line = String.format("%-12s", category);
+                    line += " ................ ";
+                    line += String.format("$%.2f", amount);
+        
+                    report.append(line).append("\n");
+                }
+        
+                report.append("------------------------------------------\n");
+                report.append(String.format("Total: $%.2f\n", grandTotal));
+            }
+        
+            java.io.File folder = new java.io.File("reports");
+            if (!folder.exists()) folder.mkdir();
+        
+            String filename = "reports/weekly_" + weekStart + ".txt";
+            writeToFile(filename, report.toString());
+        }
+        
+
+        
+
+
         
     
 
-    // MONTHLY REPORT
-    public void generateMonthlyReport(int year, Month month) {
-        // TODO - implement
-    }
-
-    // WEEKLY REPORT
-    public void generateWeeklyReport(LocalDate startDate) {
-        // TODO - implement
-    }
-
-    // CATEGORY REPORT
-    public void generateCategoryReport() {
-        // TODO - implement
-    }
+   
 
     // Helper to write text file
     private void writeToFile(String filename, String content) {
