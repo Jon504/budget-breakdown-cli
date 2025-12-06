@@ -39,7 +39,8 @@ public class Main {
             System.out.println("19) Sort by Category (A -> Z)");
             System.out.println("20) Generate Total Expense Report (.txt)");
             System.out.println("21) Generate Category Report (.txt)");
-            System.out.println("22) Exit");
+            System.out.println("22) Generate Monthly Report (.txt)");
+            System.out.println("23) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -207,9 +208,22 @@ public class Main {
                     rgCat.generateCategoryReport();
                     break;
 
+                    case 22:
+                    System.out.print("Enter year (e.g., 2025): ");
+                    int year1 = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Enter month (1-12): ");
+                    int monthNum1 = scanner.nextInt();
+                    scanner.nextLine();
+                    Month m = Month.of(monthNum1);
+                    ReportGenerator rgMonth = new ReportGenerator(manager);
+                    rgMonth.generateMonthlyReport(year1, m);
+                    break;
+
+
 
                 //exit the program
-                case 22:
+                case 23:
                     System.out.println("Exiting program...");
                     running = false;
                     break;
