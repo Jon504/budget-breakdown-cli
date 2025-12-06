@@ -24,7 +24,8 @@ public class Main {
             System.out.println("6) Save Expenses to CSV");
             System.out.println("7) Load Expenses from CSV");
             System.out.println("8) View Catagory Percentages");
-            System.out.println("9) Exit");
+            System.out.println("9) View Monthly Summary");
+            System.out.println("10) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -110,6 +111,7 @@ public class Main {
                     running = false;
                     break;
 
+                    
                 // for invalid input    
                 default:
                     System.out.println("Invalid option. Try again.");
